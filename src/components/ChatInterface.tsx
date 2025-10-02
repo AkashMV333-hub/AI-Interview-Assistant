@@ -36,6 +36,7 @@ const ChatInterface = () => {
   const chatEndRef = useRef<HTMLDivElement>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const recognitionRef = useRef<any>(null);
+  const questionsLoadedRef = useRef(false);
 
   const currentQuestion = questions[currentQuestionIndex];
 
@@ -46,10 +47,11 @@ const ChatInterface = () => {
 
   // Load questions when interview starts
   useEffect(() => {
-    if (stage === 'interview' && questions.length === 0 && candidate) {
+    if (stage === 'interview' && questions.length === 0 && candidate && currentQuestionIndex === 0 && !questionsLoadedRef.current) {
+      questionsLoadedRef.current = true;
       loadQuestions();
     }
-  }, [stage, candidate]);
+  }, [stage, currentQuestionIndex]); // Only depend on stage and index to prevent reloading
 
   // Timer logic
   useEffect(() => {
