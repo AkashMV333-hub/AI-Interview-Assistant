@@ -27,7 +27,7 @@ const usersSlice = createSlice({
     },
     getUserByEmail: (state, action: PayloadAction<string>) => {
       // This is just for reference, actual usage will be in selectors
-      return state.users.find((user) => user.email === action.payload);
+      state.users.find((user) => user.email === action.payload);
     },
   },
 });

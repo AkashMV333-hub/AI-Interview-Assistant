@@ -4,6 +4,7 @@ import { UserOutlined, MailOutlined, LockOutlined } from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { registerUser } from '../store/slices/usersSlice';
+import type { User } from '../store/slices/usersSlice';
 import { login } from '../store/slices/authSlice';
 import { generateToken, setTokenCookie } from '../utils/jwtUtils';
 import { v4 as uuidv4 } from 'uuid';
@@ -23,7 +24,7 @@ const Signup = () => {
     setLoading(true);
 
     // Check if email already exists
-    const existingUser = users.find((user) => user.email === values.email);
+    const existingUser = users.find((user: User) => user.email === values.email);
     if (existingUser) {
       message.error('Email already registered. Please login instead.');
       setLoading(false);

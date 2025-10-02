@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Upload, Button, Card, Typography, App } from 'antd';
+import { Upload, Card, Typography, App } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { addCandidate } from '../store/slices/candidatesSlice';

@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { login } from '../store/slices/authSlice';
 import { generateToken, setTokenCookie } from '../utils/jwtUtils';
+import type { User } from '../store/slices/usersSlice';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -19,7 +20,7 @@ const Login = () => {
     setLoading(true);
 
     // Find user by email
-    const user = users.find((u) => u.email === values.email);
+    const user = users.find((u: User) => u.email === values.email);
 
     if (!user) {
       message.error('Email not found. Please sign up first.');

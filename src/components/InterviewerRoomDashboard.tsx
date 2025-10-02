@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Card, Button, Typography, Space, Input, Modal, Spin, App } from 'antd';
 import { PlusOutlined, CopyOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-import { useAppSelector, useAppDispatch } from '../store/hooks';
+import { useAppDispatch } from '../store/hooks';
 import { roomsAPI, authAPI } from '../services/api';
 import { logout } from '../store/slices/authSlice';
 import Cookies from 'js-cookie';
