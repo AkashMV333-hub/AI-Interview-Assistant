@@ -22,6 +22,7 @@ const persistConfig = {
 };
 
 export const store = configureStore({
+  // @ts-ignore - persistReducer type compatibility issue
   reducer: {
     candidates: candidatesReducer, // Don't persist candidates - too large (resume files)
     interview: persistReducer({ ...persistConfig, key: 'interview' }, interviewReducer),

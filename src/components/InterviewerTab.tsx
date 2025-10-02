@@ -39,7 +39,7 @@ const InterviewerTab = () => {
         setRoomCandidates(data);
         // Update Redux store with candidates (check for duplicates)
         data.forEach((candidate: Candidate) => {
-          const exists = allCandidates.find((c) => c.id === candidate.id);
+          const exists = allCandidates.find((c: Candidate) => c.id === candidate.id);
           if (!exists) {
             dispatch(addCandidate(candidate));
           } else {
