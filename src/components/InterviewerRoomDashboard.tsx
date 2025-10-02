@@ -104,7 +104,7 @@ const InterviewerRoomDashboard = () => {
           padding: '24px 32px',
           marginBottom: '32px',
           border: '1px solid #e0e0e0',
-          borderLeft: '4px solid #0f62fe'
+          borderLeft: '4px solid #0000cc'
         }}>
           <div style={{
             display: 'flex',
@@ -198,7 +198,7 @@ const InterviewerRoomDashboard = () => {
                 background: '#d0e2ff',
                 padding: '16px',
                 borderRadius: '0',
-                border: '1px solid #0f62fe'
+                border: '1px solid #0000cc'
               }}>
                 <Text strong style={{ color: '#161616', fontSize: '13px', display: 'block', marginBottom: '8px' }}>Room Code</Text>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -211,7 +211,7 @@ const InterviewerRoomDashboard = () => {
                     borderRadius: '0',
                     fontWeight: '600',
                     letterSpacing: '1px',
-                    border: '1px solid #0f62fe'
+                    border: '1px solid #0000cc'
                   }}>
                     {room.roomCode}
                   </Text>
@@ -219,7 +219,7 @@ const InterviewerRoomDashboard = () => {
                     icon={<CopyOutlined />}
                     onClick={() => copyToClipboard(room.roomCode, 'Room code')}
                     style={{
-                      background: '#0f62fe',
+                      background: '#0000cc',
                       color: '#ffffff',
                       border: 'none',
                       borderRadius: '0',
@@ -267,9 +267,9 @@ const InterviewerRoomDashboard = () => {
         title={
           <div style={{
             padding: '8px 0',
-            borderBottom: '2px solid #0f62fe'
+            borderBottom: '2px solid #0000cc'
           }}>
-            <Title level={4} style={{ margin: 0, color: '#0f62fe' }}>
+            <Title level={4} style={{ margin: 0, color: '#0000cc' }}>
               Create New Interview Room
             </Title>
           </div>
@@ -280,7 +280,7 @@ const InterviewerRoomDashboard = () => {
         okText="Create Room"
         okButtonProps={{
           style: {
-            background: '#0f62fe',
+            background: '#0000cc',
             border: 'none',
             height: '40px',
             borderRadius: '0',

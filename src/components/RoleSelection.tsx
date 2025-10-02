@@ -38,7 +38,7 @@ const RoleSelection = () => {
           background: '#ffffff',
           padding: '20px 32px',
           border: '1px solid #e0e0e0',
-          borderLeft: '4px solid #0f62fe'
+          borderLeft: '4px solid #0000cc'
         }}>
           <Title level={1} style={{ color: '#161616', fontSize: '38px', marginBottom: '10px', fontWeight: '600' }}>
             AI Interview Assistant
@@ -69,7 +69,7 @@ const RoleSelection = () => {
             onClick={() => navigate('/login/interviewee')}
           >
             <Space direction="vertical" size="large" style={{ width: '100%' }}>
-              <UserOutlined style={{ fontSize: '80px', color: '#0f62fe' }} />
+              <UserOutlined style={{ fontSize: '80px', color: '#0000cc' }} />
               <Title level={2} style={{ marginBottom: 0, color: '#161616' }}>Interviewee</Title>
               <Paragraph style={{ fontSize: '16px', color: '#525252', minHeight: '60px' }}>
                 Upload your resume and take an AI-powered technical interview to showcase your skills
@@ -79,7 +79,7 @@ const RoleSelection = () => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 color: '#ffffff',
-                background: '#0f62fe',
+                background: '#0000cc',
                 padding: '12px 24px',
                 fontSize: '16px',
                 fontWeight: '600',
@@ -105,7 +105,7 @@ const RoleSelection = () => {
             onClick={() => navigate('/login/interviewer')}
           >
             <Space direction="vertical" size="large" style={{ width: '100%' }}>
-              <TeamOutlined style={{ fontSize: '80px', color: '#0f62fe' }} />
+              <TeamOutlined style={{ fontSize: '80px', color: '#0000cc' }} />
               <Title level={2} style={{ marginBottom: 0, color: '#161616' }}>Interviewer</Title>
               <Paragraph style={{ fontSize: '16px', color: '#525252', minHeight: '60px' }}>
                 View and manage all candidates, review interview results, and track performance
@@ -115,7 +115,7 @@ const RoleSelection = () => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 color: '#ffffff',
-                background: '#0f62fe',
+                background: '#0000cc',
                 padding: '12px 24px',
                 fontSize: '16px',
                 fontWeight: '600',

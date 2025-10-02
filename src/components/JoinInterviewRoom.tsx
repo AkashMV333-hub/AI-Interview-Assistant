@@ -103,7 +103,7 @@ const JoinInterviewRoom = () => {
           <div style={{
             textAlign: 'center',
             padding: '24px 0 16px',
-            borderBottom: '2px solid #0f62fe'
+            borderBottom: '2px solid #0000cc'
           }}>
             <Title level={2} style={{ color: '#161616', margin: 0, marginBottom: '8px' }}>
               Join Interview Room
@@ -146,7 +146,7 @@ const JoinInterviewRoom = () => {
               borderRadius: '0',
               fontSize: '16px',
               fontWeight: '600',
-              background: '#0f62fe',
+              background: '#0000cc',
               border: 'none'
             }}
           >

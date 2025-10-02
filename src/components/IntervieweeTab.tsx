@@ -41,7 +41,7 @@ const IntervieweeTab = () => {
           background: '#ffffff',
           padding: '20px 32px',
           border: '1px solid #e0e0e0',
-          borderLeft: '4px solid #0f62fe',
+          borderLeft: '4px solid #0000cc',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',

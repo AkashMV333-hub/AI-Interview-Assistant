@@ -142,7 +142,7 @@ const ResumeUpload = () => {
           textAlign: 'center',
           marginBottom: '32px',
           padding: '24px',
-          background: '#0f62fe',
+          background: '#0000cc',
           marginTop: '-24px',
           marginLeft: '-24px',
           marginRight: '-24px'
@@ -161,12 +161,12 @@ const ResumeUpload = () => {
           style={{
             background: '#ffffff',
             borderRadius: '0',
-            border: '2px dashed #0f62fe',
+            border: '2px dashed #0000cc',
             padding: '40px 20px'
           }}
         >
           <p className="ant-upload-drag-icon">
-            <InboxOutlined style={{ color: '#0f62fe', fontSize: '48px' }} />
+            <InboxOutlined style={{ color: '#0000cc', fontSize: '48px' }} />
           </p>
           <p className="ant-upload-text" style={{ fontSize: '16px', fontWeight: '600', color: '#161616' }}>
             Click or drag resume to this area to upload
@@ -182,7 +182,7 @@ const ResumeUpload = () => {
             marginTop: 24,
             padding: '16px',
             background: '#d0e2ff',
-            border: '1px solid #0f62fe'
+            border: '1px solid #0000cc'
           }}>
             <Text style={{ color: '#161616', fontSize: '14px', fontWeight: '600' }}>
               Processing Resume...

@@ -416,7 +416,7 @@ const ChatInterface = () => {
               background: '#ffffff',
               padding: '20px',
               border: '1px solid #e0e0e0',
-              borderLeft: '4px solid #0f62fe'
+              borderLeft: '4px solid #0000cc'
             }}>
               <Text strong style={{ color: '#161616', fontSize: '14px', display: 'block', marginBottom: '12px' }}>
                 Interview Progress: Question {currentQuestionIndex + 1} of {questions.length}
@@ -424,7 +424,7 @@ const ChatInterface = () => {
               <Progress
                 percent={Math.round(progressPercent)}
                 status="active"
-                strokeColor="#0f62fe"
+                strokeColor="#0000cc"
                 trailColor="#e0e0e0"
                 showInfo={false}
               />
@@ -434,11 +434,11 @@ const ChatInterface = () => {
               <div style={{
                 background: '#d0e2ff',
                 padding: '20px',
-                border: '1px solid #0f62fe'
+                border: '1px solid #0000cc'
               }}>
                 <Space style={{ width: '100%', justifyContent: 'space-between', marginBottom: '12px' }}>
                   <Space>
-                    <ClockCircleOutlined style={{ fontSize: '18px', color: '#0f62fe' }} />
+                    <ClockCircleOutlined style={{ fontSize: '18px', color: '#0000cc' }} />
                     <Text strong style={{ color: '#161616', fontSize: '16px' }}>
                       Time Remaining: {timeLeft}s
                     </Text>
@@ -451,7 +451,7 @@ const ChatInterface = () => {
                   percent={timePercent}
                   status={timeLeft < 10 ? 'exception' : 'active'}
                   showInfo={false}
-                  strokeColor={timeLeft < 10 ? '#da1e28' : '#0f62fe'}
+                  strokeColor={timeLeft < 10 ? '#da1e28' : '#0000cc'}
                   trailColor="rgba(0,0,0,0.1)"
                 />
               </div>
@@ -484,7 +484,7 @@ const ChatInterface = () => {
                       borderRadius: '0',
                       background:
                         msg.type === 'user'
-                          ? '#0f62fe'
+                          ? '#0000cc'
                           : msg.type === 'system'
                           ? '#f4f4f4'
                           : '#d0e2ff',
@@ -564,7 +564,7 @@ const ChatInterface = () => {
                     marginTop: '16px',
                     padding: '12px',
                     background: '#d0e2ff',
-                    border: '1px solid #0f62fe'
+                    border: '1px solid #0000cc'
                   }}>
                     <Text style={{ color: '#161616', fontSize: '14px' }}>
                       🎤 Listening... Speak your answer clearly
@@ -580,7 +580,7 @@ const ChatInterface = () => {
               textAlign: 'center',
               padding: '48px',
               background: '#d0e2ff',
-              border: '4px solid #0f62fe'
+              border: '4px solid #0000cc'
             }}>
               <Title level={2} style={{ color: '#161616', marginBottom: '16px' }}>
                 Interview Completed

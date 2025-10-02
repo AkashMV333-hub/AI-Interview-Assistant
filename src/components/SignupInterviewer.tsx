@@ -72,7 +72,7 @@ const SignupInterviewer = () => {
           <div style={{
             textAlign: 'center',
             padding: '24px 0 16px',
-            borderBottom: '2px solid #0f62fe'
+            borderBottom: '2px solid #0000cc'
           }}>
             <Title level={2} style={{ color: '#161616', marginBottom: '8px' }}>Create Interviewer Account</Title>
             <Paragraph style={{ fontSize: '14px', color: '#525252', margin: 0 }}>
@@ -189,7 +189,7 @@ const SignupInterviewer = () => {
 
           <div style={{ textAlign: 'center', paddingTop: '16px', borderTop: '1px solid #e0e0e0' }}>
             <Text style={{ color: '#525252' }}>Already have an account? </Text>
-            <Link to="/login/interviewer" style={{ color: '#0f62fe', fontWeight: '600' }}>Sign In</Link>
+            <Link to="/login/interviewer" style={{ color: '#0000cc', fontWeight: '600' }}>Sign In</Link>
           </div>
         </Space>
       </Card>

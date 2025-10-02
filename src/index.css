@@ -19,8 +19,8 @@ body {
 
 /* IBM Color Palette */
 :root {
-  --ibm-blue: #0f62fe;
-  --ibm-blue-hover: #0353e9;
+  --ibm-blue: #0000cc;
+  --ibm-blue-hover: #0000b3;
   --ibm-blue-light: #d0e2ff;
   --ibm-gray: #f4f4f4;
   --ibm-text: #161616;
@@ -38,38 +38,38 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #0f62fe;
+  background: #0000cc;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #0353e9;
+  background: #0000b3;
 }
 
 /* IBM-style Button */
 .ant-btn-primary {
-  background: #0f62fe !important;
-  border-color: #0f62fe !important;
+  background: #0000cc !important;
+  border-color: #0000cc !important;
 }
 
 .ant-btn-primary:hover {
-  background: #0353e9 !important;
-  border-color: #0353e9 !important;
+  background: #0000b3 !important;
+  border-color: #0000b3 !important;
 }
 
 /* Input focus */
 .ant-input:focus,
 .ant-input-focused {
-  border-color: #0f62fe !important;
-  box-shadow: 0 0 0 2px rgba(15, 98, 254, 0.1) !important;
+  border-color: #0000cc !important;
+  box-shadow: 0 0 0 2px rgba(0, 0, 204, 0.1) !important;
 }
 
 /* Progress bar */
 .ant-progress-bg {
-  background: #0f62fe !important;
+  background: #0000cc !important;
 }
 
 /* Card hover */
 .ant-card-hoverable:hover {
-  border-color: #0f62fe !important;
-  box-shadow: 0 2px 8px rgba(15, 98, 254, 0.15) !important;
+  border-color: #0000cc !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 204, 0.15) !important;
 }
