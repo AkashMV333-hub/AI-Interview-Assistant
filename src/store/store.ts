@@ -19,12 +19,11 @@ import interviewRoomsReducer from './slices/interviewRoomsSlice';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['candidates', 'interview', 'auth', 'users', 'interviewRooms'],
 };
 
 export const store = configureStore({
   reducer: {
-    candidates: persistReducer({ ...persistConfig, key: 'candidates' }, candidatesReducer),
+    candidates: candidatesReducer, // Don't persist candidates - too large (resume files)
     interview: persistReducer({ ...persistConfig, key: 'interview' }, interviewReducer),
     auth: persistReducer({ ...persistConfig, key: 'auth' }, authReducer),
     users: persistReducer({ ...persistConfig, key: 'users' }, usersReducer),

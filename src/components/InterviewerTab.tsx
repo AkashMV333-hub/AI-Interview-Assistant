@@ -15,12 +15,13 @@ const InterviewerTab = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { roomCode } = useParams<{ roomCode: string }>();
-  const candidates = useAppSelector((state) => state.candidates.candidates);
+  const allCandidates = useAppSelector((state) => state.candidates.candidates);
   const { userName } = useAppSelector((state) => state.auth);
   const [searchText, setSearchText] = useState('');
   const [selectedCandidate, setSelectedCandidate] = useState<Candidate | null>(null);
   const [detailsVisible, setDetailsVisible] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [roomCandidates, setRoomCandidates] = useState<Candidate[]>([]);
 
   useEffect(() => {
     const fetchCandidates = async () => {
@@ -34,9 +35,11 @@ const InterviewerTab = () => {
         console.log('Fetching candidates for room:', roomCode);
         const data = await candidatesAPI.getCandidatesByRoom(roomCode);
         console.log('Fetched candidates:', data);
+        console.log('Number of candidates:', data.length);
+        setRoomCandidates(data);
         // Update Redux store with candidates (check for duplicates)
         data.forEach((candidate: Candidate) => {
-          const exists = candidates.find((c) => c.id === candidate.id);
+          const exists = allCandidates.find((c) => c.id === candidate.id);
           if (!exists) {
             dispatch(addCandidate(candidate));
           } else {
@@ -60,7 +63,7 @@ const InterviewerTab = () => {
     navigate('/');
   };
 
-  const filteredCandidates = candidates.filter(
+  const filteredCandidates = roomCandidates.filter(
     (candidate: Candidate) =>
       candidate.name.toLowerCase().includes(searchText.toLowerCase()) ||
       candidate.email.toLowerCase().includes(searchText.toLowerCase()) ||
