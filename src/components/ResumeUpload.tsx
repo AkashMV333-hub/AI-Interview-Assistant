@@ -124,8 +124,8 @@ const ResumeUpload = () => {
 
   return (
     <div style={{
-      minHeight: '100vh',
-      background: '#f4f4f4',
+      minHeight: 'calc(100vh - 200px)',
+      background: 'transparent',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',

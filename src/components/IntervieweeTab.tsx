@@ -35,22 +35,32 @@ const IntervieweeTab = () => {
   }, [currentCandidate, stage, dispatch]);
 
   return (
-    <div style={{ minHeight: '100vh', background: '#f0f2f5' }}>
+    <div style={{ minHeight: '100vh', background: '#f4f4f4' }}>
       <div
         style={{
-          background: '#fff',
-          padding: '16px 24px',
-          boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+          background: '#ffffff',
+          padding: '20px 32px',
+          border: '1px solid #e0e0e0',
+          borderLeft: '4px solid #0f62fe',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
         }}
       >
         <div>
-          <h2 style={{ margin: 0 }}>Welcome, {userName}</h2>
-          <p style={{ margin: 0, color: '#666' }}>Interviewee Portal</p>
+          <h2 style={{ margin: 0, color: '#161616', fontSize: '24px', fontWeight: '600' }}>Welcome, {userName}</h2>
+          <p style={{ margin: 0, color: '#525252', fontSize: '14px' }}>Interviewee Portal</p>
         </div>
-        <Button icon={<LogoutOutlined />} onClick={handleLogout}>
+        <Button
+          icon={<LogoutOutlined />}
+          onClick={handleLogout}
+          style={{
+            height: '40px',
+            borderRadius: '0',
+            border: '1px solid #e0e0e0',
+            fontWeight: '600'
+          }}
+        >
           Logout
         </Button>
       </div>
