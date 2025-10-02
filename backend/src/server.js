@@ -22,7 +22,8 @@ app.use(cors({
     'http://localhost:5174',
     'http://localhost:5175',
     'http://localhost:5176',
-    'https://ai-interview-assistant-j2pn.vercel.app' // Vercel deployment
+    'https://ai-interview-assistant-j2pn.vercel.app', // Vercel frontend
+    'https://ai-interview-assistant-rfxx.onrender.com' // Render backend (for self-requests)
   ],
   credentials: true, // Allow cookies
 }));
