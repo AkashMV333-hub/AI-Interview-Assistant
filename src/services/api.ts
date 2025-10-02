@@ -48,6 +48,12 @@ export const authAPI = {
       body: JSON.stringify(data),
     });
   },
+
+  logout: async () => {
+    return fetchWithAuth('/auth/logout', {
+      method: 'POST',
+    });
+  },
 };
 
 // Rooms API

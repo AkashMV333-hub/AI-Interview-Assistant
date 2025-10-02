@@ -6,14 +6,70 @@
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
+  background: #ffffff;
 }
 
 #root {
   min-height: 100vh;
+}
+
+/* IBM Color Palette */
+:root {
+  --ibm-blue: #0f62fe;
+  --ibm-blue-hover: #0353e9;
+  --ibm-blue-light: #d0e2ff;
+  --ibm-gray: #f4f4f4;
+  --ibm-text: #161616;
+  --ibm-border: #e0e0e0;
+}
+
+/* Smooth scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f4f4f4;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #0f62fe;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #0353e9;
+}
+
+/* IBM-style Button */
+.ant-btn-primary {
+  background: #0f62fe !important;
+  border-color: #0f62fe !important;
+}
+
+.ant-btn-primary:hover {
+  background: #0353e9 !important;
+  border-color: #0353e9 !important;
+}
+
+/* Input focus */
+.ant-input:focus,
+.ant-input-focused {
+  border-color: #0f62fe !important;
+  box-shadow: 0 0 0 2px rgba(15, 98, 254, 0.1) !important;
+}
+
+/* Progress bar */
+.ant-progress-bg {
+  background: #0f62fe !important;
+}
+
+/* Card hover */
+.ant-card-hoverable:hover {
+  border-color: #0f62fe !important;
+  box-shadow: 0 2px 8px rgba(15, 98, 254, 0.15) !important;
 }

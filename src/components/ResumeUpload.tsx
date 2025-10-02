@@ -10,7 +10,7 @@ import { candidatesAPI } from '../services/api';
 import type { Candidate } from '../store/slices/candidatesSlice';
 
 const { Dragger } = Upload;
-const { Title, Paragraph } = Typography;
+const { Title, Paragraph, Text } = Typography;
 
 const ResumeUpload = () => {
   const [uploading, setUploading] = useState(false);
@@ -123,30 +123,74 @@ const ResumeUpload = () => {
   };
 
   return (
-    <Card style={{ maxWidth: 600, margin: '0 auto' }}>
-      <Title level={2} style={{ textAlign: 'center' }}>
-        AI Interview Assistant
-      </Title>
-      <Paragraph style={{ textAlign: 'center', marginBottom: 32 }}>
-        Upload your resume to begin the interview process
-      </Paragraph>
-      <Dragger {...uploadProps} disabled={uploading}>
-        <p className="ant-upload-drag-icon">
-          <InboxOutlined />
-        </p>
-        <p className="ant-upload-text">Click or drag resume to this area to upload</p>
-        <p className="ant-upload-hint">
-          Supports PDF and DOCX files only. Your resume will be analyzed to extract contact information.
-        </p>
-      </Dragger>
-      {uploading && (
-        <div style={{ textAlign: 'center', marginTop: 16 }}>
-          <Button type="primary" loading>
-            Processing Resume...
-          </Button>
+    <div style={{
+      minHeight: '100vh',
+      background: '#f4f4f4',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '20px'
+    }}>
+      <Card style={{
+        maxWidth: 700,
+        width: '100%',
+        borderRadius: '0',
+        boxShadow: 'none',
+        border: '1px solid #e0e0e0'
+      }}>
+        <div style={{
+          textAlign: 'center',
+          marginBottom: '32px',
+          padding: '24px',
+          background: '#0f62fe',
+          marginTop: '-24px',
+          marginLeft: '-24px',
+          marginRight: '-24px'
+        }}>
+          <Title level={2} style={{ color: '#ffffff', margin: 0, marginBottom: '8px' }}>
+            AI Interview Assistant
+          </Title>
+          <Paragraph style={{ color: '#ffffff', margin: 0, fontSize: '16px' }}>
+            Upload your resume to begin the interview process
+          </Paragraph>
         </div>
-      )}
-    </Card>
+
+        <Dragger
+          {...uploadProps}
+          disabled={uploading}
+          style={{
+            background: '#ffffff',
+            borderRadius: '0',
+            border: '2px dashed #0f62fe',
+            padding: '40px 20px'
+          }}
+        >
+          <p className="ant-upload-drag-icon">
+            <InboxOutlined style={{ color: '#0f62fe', fontSize: '48px' }} />
+          </p>
+          <p className="ant-upload-text" style={{ fontSize: '16px', fontWeight: '600', color: '#161616' }}>
+            Click or drag resume to this area to upload
+          </p>
+          <p className="ant-upload-hint" style={{ fontSize: '14px', color: '#525252' }}>
+            Supports PDF and DOCX files only. Your resume will be analyzed using AI to extract contact information.
+          </p>
+        </Dragger>
+
+        {uploading && (
+          <div style={{
+            textAlign: 'center',
+            marginTop: 24,
+            padding: '16px',
+            background: '#d0e2ff',
+            border: '1px solid #0f62fe'
+          }}>
+            <Text style={{ color: '#161616', fontSize: '14px', fontWeight: '600' }}>
+              Processing Resume...
+            </Text>
+          </div>
+        )}
+      </Card>
+    </div>
   );
 };
 

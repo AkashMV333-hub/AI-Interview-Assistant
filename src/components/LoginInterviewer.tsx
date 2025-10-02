@@ -54,7 +54,7 @@ const LoginInterviewer = () => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: 'linear-gradient(135deg, #52c41a 0%, #389e0d 100%)',
+        background: '#f4f4f4',
         padding: '20px',
       }}
     >
@@ -62,13 +62,19 @@ const LoginInterviewer = () => {
         style={{
           maxWidth: 500,
           width: '100%',
-          boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
+          borderRadius: '0',
+          border: '1px solid #e0e0e0',
+          boxShadow: 'none',
         }}
       >
         <Space direction="vertical" size="large" style={{ width: '100%' }}>
-          <div style={{ textAlign: 'center' }}>
-            <Title level={2}>Interviewer Sign In</Title>
-            <Paragraph style={{ fontSize: '14px', color: '#666' }}>
+          <div style={{
+            textAlign: 'center',
+            padding: '24px 0 16px',
+            borderBottom: '2px solid #0f62fe'
+          }}>
+            <Title level={2} style={{ color: '#161616', marginBottom: '8px' }}>Interviewer Sign In</Title>
+            <Paragraph style={{ fontSize: '14px', color: '#525252', margin: 0 }}>
               Welcome back! Please sign in to continue
             </Paragraph>
           </div>
@@ -81,7 +87,7 @@ const LoginInterviewer = () => {
             requiredMark={false}
           >
             <Form.Item
-              label="Email"
+              label={<span style={{ color: '#161616', fontWeight: '600' }}>Email</span>}
               name="email"
               rules={[
                 { required: true, message: 'Please enter your email' },
@@ -89,14 +95,18 @@ const LoginInterviewer = () => {
               ]}
             >
               <Input
-                prefix={<MailOutlined />}
+                prefix={<MailOutlined style={{ color: '#525252' }} />}
                 placeholder="Enter your email"
                 size="large"
+                style={{
+                  borderRadius: '0',
+                  border: '1px solid #e0e0e0'
+                }}
               />
             </Form.Item>
 
             <Form.Item
-              label="Password"
+              label={<span style={{ color: '#161616', fontWeight: '600' }}>Password</span>}
               name="password"
               rules={[
                 { required: true, message: 'Please enter your password' },
@@ -104,29 +114,38 @@ const LoginInterviewer = () => {
               ]}
             >
               <Input.Password
-                prefix={<LockOutlined />}
+                prefix={<LockOutlined style={{ color: '#525252' }} />}
                 placeholder="Enter your password"
                 size="large"
+                style={{
+                  borderRadius: '0',
+                  border: '1px solid #e0e0e0'
+                }}
               />
             </Form.Item>
 
-            <Form.Item style={{ marginBottom: 0 }}>
+            <Form.Item style={{ marginBottom: 0, marginTop: '32px' }}>
               <Button
                 type="primary"
                 htmlType="submit"
                 size="large"
                 block
                 loading={loading}
-                style={{ background: '#52c41a', borderColor: '#52c41a' }}
+                style={{
+                  borderRadius: '0',
+                  height: '48px',
+                  fontSize: '16px',
+                  fontWeight: '600'
+                }}
               >
                 Sign In
               </Button>
             </Form.Item>
           </Form>
 
-          <div style={{ textAlign: 'center' }}>
-            <Text>Don't have an account? </Text>
-            <Link to="/signup/interviewer">Sign Up</Link>
+          <div style={{ textAlign: 'center', paddingTop: '16px', borderTop: '1px solid #e0e0e0' }}>
+            <Text style={{ color: '#525252' }}>Don't have an account? </Text>
+            <Link to="/signup/interviewer" style={{ color: '#0f62fe', fontWeight: '600' }}>Sign Up</Link>
           </div>
         </Space>
       </Card>

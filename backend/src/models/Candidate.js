@@ -23,6 +23,12 @@ const questionAnswerSchema = new mongoose.Schema({
   score: Number,
 });
 
+const resumeFileSchema = new mongoose.Schema({
+  name: String,
+  type: String,
+  data: String, // Base64 encoded
+}, { _id: false });
+
 const candidateSchema = new mongoose.Schema({
   id: {
     type: String,
@@ -47,11 +53,7 @@ const candidateSchema = new mongoose.Schema({
   },
   phone: String,
   resumeText: String,
-  resumeFile: {
-    name: String,
-    type: String,
-    data: String, // Base64 encoded
-  },
+  resumeFile: resumeFileSchema,
   profileDescription: String,
   status: {
     type: String,

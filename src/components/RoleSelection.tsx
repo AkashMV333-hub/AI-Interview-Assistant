@@ -27,16 +27,23 @@ const RoleSelection = () => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        background: '#f4f4f4',
         padding: '20px',
       }}
     >
       <div style={{ maxWidth: 1000, width: '100%' }}>
-        <div style={{ textAlign: 'center', marginBottom: '48px' }}>
-          <Title level={1} style={{ color: 'white', fontSize: '48px', marginBottom: '16px' }}>
+        <div style={{
+          textAlign: 'center',
+          marginBottom: '38px',
+          background: '#ffffff',
+          padding: '20px 32px',
+          border: '1px solid #e0e0e0',
+          borderLeft: '4px solid #0f62fe'
+        }}>
+          <Title level={1} style={{ color: '#161616', fontSize: '38px', marginBottom: '10px', fontWeight: '600' }}>
             AI Interview Assistant
           </Title>
-          <Paragraph style={{ fontSize: '18px', color: 'rgba(255,255,255,0.9)' }}>
+          <Paragraph style={{ fontSize: '18px', color: '#525252', margin: 0 }}>
             Choose your role to get started
           </Paragraph>
         </div>
@@ -52,31 +59,34 @@ const RoleSelection = () => {
             hoverable
             style={{
               textAlign: 'center',
-              border: 'none',
-              borderRadius: '16px',
-              boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
+              border: '1px solid #e0e0e0',
+              borderRadius: '0',
               cursor: 'pointer',
-              transition: 'all 0.3s',
+              transition: 'all 0.2s',
               padding: '24px',
+              background: '#ffffff'
             }}
             onClick={() => navigate('/login/interviewee')}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-8px)';
-              e.currentTarget.style.boxShadow = '0 12px 48px rgba(0,0,0,0.3)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = '0 8px 32px rgba(0,0,0,0.2)';
-            }}
           >
             <Space direction="vertical" size="large" style={{ width: '100%' }}>
-              <UserOutlined style={{ fontSize: '80px', color: '#1890ff' }} />
-              <Title level={2} style={{ marginBottom: 0 }}>Interviewee</Title>
-              <Paragraph style={{ fontSize: '16px', color: '#666', minHeight: '60px' }}>
+              <UserOutlined style={{ fontSize: '80px', color: '#0f62fe' }} />
+              <Title level={2} style={{ marginBottom: 0, color: '#161616' }}>Interviewee</Title>
+              <Paragraph style={{ fontSize: '16px', color: '#525252', minHeight: '60px' }}>
                 Upload your resume and take an AI-powered technical interview to showcase your skills
               </Paragraph>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#1890ff', fontSize: '18px', fontWeight: 500 }}>
-                Let's Start <ArrowRightOutlined style={{ marginLeft: '8px' }} />
+              <div style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: '#ffffff',
+                background: '#0f62fe',
+                padding: '12px 24px',
+                fontSize: '16px',
+                fontWeight: '600',
+                borderRadius: '0',
+                marginTop: '8px'
+              }}>
+                Get Started <ArrowRightOutlined style={{ marginLeft: '8px' }} />
               </div>
             </Space>
           </Card>
@@ -85,31 +95,34 @@ const RoleSelection = () => {
             hoverable
             style={{
               textAlign: 'center',
-              border: 'none',
-              borderRadius: '16px',
-              boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
+              border: '1px solid #e0e0e0',
+              borderRadius: '0',
               cursor: 'pointer',
-              transition: 'all 0.3s',
+              transition: 'all 0.2s',
               padding: '24px',
+              background: '#ffffff'
             }}
             onClick={() => navigate('/login/interviewer')}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-8px)';
-              e.currentTarget.style.boxShadow = '0 12px 48px rgba(0,0,0,0.3)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = '0 8px 32px rgba(0,0,0,0.2)';
-            }}
           >
             <Space direction="vertical" size="large" style={{ width: '100%' }}>
-              <TeamOutlined style={{ fontSize: '80px', color: '#52c41a' }} />
-              <Title level={2} style={{ marginBottom: 0 }}>Interviewer</Title>
-              <Paragraph style={{ fontSize: '16px', color: '#666', minHeight: '60px' }}>
+              <TeamOutlined style={{ fontSize: '80px', color: '#0f62fe' }} />
+              <Title level={2} style={{ marginBottom: 0, color: '#161616' }}>Interviewer</Title>
+              <Paragraph style={{ fontSize: '16px', color: '#525252', minHeight: '60px' }}>
                 View and manage all candidates, review interview results, and track performance
               </Paragraph>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#52c41a', fontSize: '18px', fontWeight: 500 }}>
-                Let's Start <ArrowRightOutlined style={{ marginLeft: '8px' }} />
+              <div style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: '#ffffff',
+                background: '#0f62fe',
+                padding: '12px 24px',
+                fontSize: '16px',
+                fontWeight: '600',
+                borderRadius: '0',
+                marginTop: '8px'
+              }}>
+                Get Started <ArrowRightOutlined style={{ marginLeft: '8px' }} />
               </div>
             </Space>
           </Card>

@@ -91,28 +91,50 @@ const JoinInterviewRoom = () => {
     >
       <Card
         style={{
-          maxWidth: 500,
+          maxWidth: 550,
           width: '100%',
-          boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
+          borderRadius: '20px',
+          boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
+          background: 'rgba(255,255,255,0.98)',
+          backdropFilter: 'blur(10px)'
         }}
       >
         <Space direction="vertical" size="large" style={{ width: '100%' }}>
-          <div style={{ textAlign: 'center' }}>
-            <Title level={2}>Join Interview Room</Title>
-            <Paragraph style={{ fontSize: '14px', color: '#666' }}>
+          <div style={{
+            textAlign: 'center',
+            padding: '24px',
+            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            borderRadius: '12px',
+            marginTop: '-24px',
+            marginLeft: '-24px',
+            marginRight: '-24px',
+            marginBottom: '8px'
+          }}>
+            <Title level={2} style={{ color: 'white', margin: 0, marginBottom: '8px' }}>
+              🚪 Join Interview Room
+            </Title>
+            <Paragraph style={{ color: 'rgba(255,255,255,0.9)', margin: 0, fontSize: '15px' }}>
               Enter the room code provided by your interviewer
             </Paragraph>
           </div>
 
           <div>
-            <Text strong>Room Code:</Text>
+            <Text strong style={{ fontSize: '15px', color: '#333' }}>Room Code:</Text>
             <Input
               placeholder="Enter room code (e.g., INT-ABC123)"
               value={roomCode}
               onChange={(e) => setRoomCode(e.target.value.toUpperCase())}
               onPressEnter={handleJoinRoom}
               size="large"
-              style={{ marginTop: '8px' }}
+              style={{
+                marginTop: '10px',
+                borderRadius: '10px',
+                border: '2px solid #e0e0e0',
+                fontSize: '16px',
+                padding: '12px',
+                fontWeight: 'bold',
+                letterSpacing: '1px'
+              }}
               maxLength={11}
             />
           </div>
@@ -124,13 +146,27 @@ const JoinInterviewRoom = () => {
             block
             onClick={handleJoinRoom}
             loading={loading}
+            style={{
+              height: '52px',
+              borderRadius: '10px',
+              fontSize: '16px',
+              fontWeight: 'bold',
+              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              border: 'none',
+              boxShadow: '0 4px 15px rgba(102, 126, 234, 0.4)'
+            }}
           >
             Join Interview Room
           </Button>
 
-          <div style={{ textAlign: 'center' }}>
-            <Text type="secondary" style={{ fontSize: '12px' }}>
-              Make sure you have the correct room code from your interviewer
+          <div style={{
+            textAlign: 'center',
+            padding: '12px',
+            background: 'linear-gradient(to right, #f8f9fa, #e9ecef)',
+            borderRadius: '8px'
+          }}>
+            <Text type="secondary" style={{ fontSize: '13px' }}>
+              💡 Make sure you have the correct room code from your interviewer
             </Text>
           </div>
         </Space>
