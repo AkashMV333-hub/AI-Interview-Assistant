@@ -1,114 +1,68 @@
 import { useState, useEffect } from 'react';
-import { Card, Button, Typography, Space, Input, message as antMessage, Modal } from 'antd';
-import { PlusOutlined, CopyOutlined, ShareAltOutlined } from '@ant-design/icons';
+import { Card, Button, Typography, Space, Input, Modal, Spin, App } from 'antd';
+import { PlusOutlined, CopyOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-import { useAppSelector, useAppDispatch } from '../store/hooks';
-import { createRoom } from '../store/slices/interviewRoomsSlice';
-import { roomRegistry } from '../utils/roomRegistry';
-import { v4 as uuidv4 } from 'uuid';
+import { useAppSelector } from '../store/hooks';
+import { roomsAPI } from '../services/api';
 
 const { Title, Text, Paragraph } = Typography;
 
 const InterviewerRoomDashboard = () => {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { userId, userName } = useAppSelector((state) => {
-    const user = state.users.users.find(u => u.email === state.auth.userEmail);
-    console.log('Current user:', { userId: user?.userId, userName: state.auth.userName });
-    return { userId: user?.userId || '', userName: state.auth.userName };
-  });
-  const allRooms = useAppSelector((state) => state.interviewRooms.rooms);
-  const rooms = useAppSelector((state) =>
-    state.interviewRooms.rooms.filter(r => r.interviewerId === userId && r.isActive)
-  );
+  const { message } = App.useApp();
+  const [rooms, setRooms] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
   const [newRoomTitle, setNewRoomTitle] = useState('');
   const [showCreateModal, setShowCreateModal] = useState(false);
 
-  // Debug log
-  useEffect(() => {
-    console.log('All rooms in system:', allRooms);
-    console.log('Filtered rooms for user:', rooms);
-    console.log('Current userId:', userId);
-  }, [allRooms, rooms, userId]);
-
-  // Auto-create a default room if interviewer has none
-  useEffect(() => {
-    if (userId && allRooms.length === 0) {
-      // Create a default room automatically
-      const defaultRoomCode = generateRoomCode();
-      const defaultRoom = {
-        roomId: uuidv4(),
-        roomCode: defaultRoomCode,
-        interviewerId: userId,
-        interviewerName: userName,
-        title: 'My First Interview Room',
-        candidateIds: [],
-        createdAt: Date.now(),
-        isActive: true,
-      };
-      console.log('Auto-creating default room:', defaultRoom);
-      dispatch(createRoom(defaultRoom));
-      antMessage.success(`Welcome! Your first room has been created with code: ${defaultRoomCode}`);
-    } else if (rooms.length === 0 && allRooms.length > 0) {
-      setShowCreateModal(true);
+  // Fetch rooms from backend
+  const fetchRooms = async () => {
+    try {
+      setLoading(true);
+      const data = await roomsAPI.getRooms();
+      setRooms(data);
+    } catch (error: any) {
+      console.error('Error fetching rooms:', error);
+      message.error('Failed to load rooms');
+    } finally {
+      setLoading(false);
     }
-  }, [userId]);
-
-  const generateRoomCode = () => {
-    return `INT-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
   };
 
-  const handleCreateRoom = () => {
+  useEffect(() => {
+    fetchRooms();
+  }, []);
+
+  const handleCreateRoom = async () => {
     if (!newRoomTitle.trim()) {
-      antMessage.warning('Please enter a room title');
+      message.warning('Please enter a room title');
       return;
     }
 
-    const roomCode = generateRoomCode();
-    const newRoom = {
-      roomId: uuidv4(),
-      roomCode,
-      interviewerId: userId,
-      interviewerName: userName,
-      title: newRoomTitle,
-      candidateIds: [],
-      createdAt: Date.now(),
-      isActive: true,
-    };
-
-    console.log('Creating room:', newRoom);
-    dispatch(createRoom(newRoom));
-
-    // Register room in global registry (simulating backend)
-    roomRegistry.registerRoom({
-      roomCode,
-      interviewerId: userId,
-      interviewerName: userName,
-      title: newRoomTitle,
-      createdAt: Date.now(),
-    });
-
-    console.log('Room registered globally:', roomCode);
-
-    // Verify room was created
-    setTimeout(() => {
-      console.log('All rooms after creation:', rooms);
-      console.log('Global registry:', roomRegistry.getAllRooms());
-    }, 100);
-
-    antMessage.success(`Interview room created! Code: ${roomCode}`);
-    setNewRoomTitle('');
-    setShowCreateModal(false);
+    try {
+      const response = await roomsAPI.createRoom({ title: newRoomTitle });
+      message.success(`Interview room created! Code: ${response.room.roomCode}`);
+      setNewRoomTitle('');
+      setShowCreateModal(false);
+      fetchRooms(); // Refresh the list
+    } catch (error: any) {
+      console.error('Error creating room:', error);
+      message.error(error.message || 'Failed to create room');
+    }
   };
 
   const copyToClipboard = (text: string, label: string) => {
     navigator.clipboard.writeText(text);
-    antMessage.success(`${label} copied to clipboard!`);
+    message.success(`${label} copied to clipboard!`);
   };
 
-  const getJoinLink = (roomCode: string) => {
-    return `${window.location.origin}/join/${roomCode}`;
-  };
+  if (loading) {
+    return (
+      <div style={{ padding: '24px', textAlign: 'center' }}>
+        <Spin size="large" />
+      </div>
+    );
+  }
 
   return (
     <div style={{ padding: '24px', maxWidth: 1200, margin: '0 auto' }}>
@@ -123,7 +77,13 @@ const InterviewerRoomDashboard = () => {
         </Button>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', gap: '24px' }}>
+      {rooms.length === 0 ? (
+        <Card style={{ textAlign: 'center', padding: '48px' }}>
+          <Title level={4}>No interview rooms yet</Title>
+          <Text type="secondary">Create your first room to get started</Text>
+        </Card>
+      ) : (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', gap: '24px' }}>
         {rooms.map((room) => (
           <Card
             key={room.roomId}
@@ -148,22 +108,6 @@ const InterviewerRoomDashboard = () => {
                 </div>
               </div>
 
-              <div>
-                <Text strong>Join Link:</Text>
-                <div style={{ display: 'flex', alignItems: 'center', marginTop: '8px', gap: '8px' }}>
-                  <Input
-                    value={getJoinLink(room.roomCode)}
-                    readOnly
-                    size="small"
-                  />
-                  <Button
-                    size="small"
-                    icon={<CopyOutlined />}
-                    onClick={() => copyToClipboard(getJoinLink(room.roomCode), 'Join link')}
-                  />
-                </div>
-              </div>
-
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <Text type="secondary">{room.candidateIds.length} candidate(s)</Text>
                 <Button
@@ -176,7 +120,8 @@ const InterviewerRoomDashboard = () => {
             </Space>
           </Card>
         ))}
-      </div>
+        </div>
+      )}
 
       <Modal
         title="Create New Interview Room"

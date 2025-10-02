@@ -18,14 +18,22 @@ const generateRoomCode = () => {
 router.post('/', authMiddleware, async (req, res) => {
   try {
     const { title } = req.body;
-    const { userId, name } = req.user;
+    const userId = req.user.userId;
+
+    // Get user name from database
+    const User = require('../models/User');
+    const user = await User.findOne({ userId });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
 
     const roomCode = generateRoomCode();
     const room = new InterviewRoom({
       roomId: uuidv4(),
       roomCode,
       interviewerId: userId,
-      interviewerName: name,
+      interviewerName: user.name,
       title,
       candidateIds: [],
     });

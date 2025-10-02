@@ -2,9 +2,8 @@ import { useState, useEffect } from 'react';
 import { Card, Input, Button, Typography, Space, App } from 'antd';
 import { LoginOutlined } from '@ant-design/icons';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useAppSelector, useAppDispatch } from '../store/hooks';
-import { addCandidateToRoom } from '../store/slices/interviewRoomsSlice';
-import { roomRegistry } from '../utils/roomRegistry';
+import { useAppSelector } from '../store/hooks';
+import { roomsAPI } from '../services/api';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -13,20 +12,8 @@ const JoinInterviewRoom = () => {
   const [roomCode, setRoomCode] = useState(urlRoomCode || '');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const { message } = App.useApp();
   const { isAuthenticated, role } = useAppSelector((state) => state.auth);
-  const rooms = useAppSelector((state) => state.interviewRooms.rooms);
-  const interviewRoomsState = useAppSelector((state) => state.interviewRooms);
-  const currentUser = useAppSelector((state) =>
-    state.users.users.find(u => u.email === state.auth.userEmail)
-  );
-
-  // Debug: Log state on mount
-  useEffect(() => {
-    console.log('JoinInterviewRoom - Full interviewRooms state:', interviewRoomsState);
-    console.log('JoinInterviewRoom - Rooms array:', rooms);
-  }, [interviewRoomsState, rooms]);
 
   useEffect(() => {
     // If user is not authenticated, redirect to login
@@ -49,7 +36,7 @@ const JoinInterviewRoom = () => {
     }
   }, [isAuthenticated, role, urlRoomCode, navigate, message]);
 
-  const handleJoinRoom = () => {
+  const handleJoinRoom = async () => {
     if (!roomCode.trim()) {
       message.warning('Please enter a room code');
       return;
@@ -57,34 +44,19 @@ const JoinInterviewRoom = () => {
 
     setLoading(true);
 
-    console.log('Searching for room:', roomCode.toUpperCase());
-    console.log('Available rooms in Redux:', rooms);
-
-    // Check global registry (simulating backend lookup)
-    const globalRoom = roomRegistry.findRoom(roomCode);
-    console.log('Found room in global registry:', globalRoom);
-
-    if (!globalRoom) {
-      message.error(`Invalid room code: ${roomCode}. Please check and try again.`);
-      console.log('Room not found in global registry');
-      console.log('All rooms in registry:', roomRegistry.getAllRooms());
-      setLoading(false);
-      return;
-    }
-
-    if (currentUser) {
-      console.log('Adding candidate to room:', currentUser.userId);
-      // Add candidate to room
-      dispatch(addCandidateToRoom({ roomCode: globalRoom.roomCode, candidateId: currentUser.userId }));
-      message.success(`Joined "${globalRoom.title}" successfully!`);
+    try {
+      // Join room via backend API
+      const response = await roomsAPI.joinRoom(roomCode.toUpperCase());
+      message.success(`Joined "${response.room.title}" successfully!`);
 
       // Navigate to interview
       setTimeout(() => {
         navigate('/interviewee');
         setLoading(false);
       }, 500);
-    } else {
-      message.error('User not found. Please login again.');
+    } catch (error: any) {
+      console.error('Error joining room:', error);
+      message.error(error.message || 'Failed to join room. Please check the code and try again.');
       setLoading(false);
     }
   };
