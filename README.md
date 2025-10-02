@@ -2,8 +2,9 @@
 
 A full-stack AI interview platform that conducts automated technical interviews for Full Stack (React/Node) positions. Built for the Swipe Internship Assignment.
 
-🔗 **Live Demo**: [Your Deployed URL]
-📹 **Demo Video**: [Your Video URL]
+🔗 **Live Demo**: https://ai-interview-assistant-j2pn.vercel.app/
+📹 **Demo Video**: https://youtu.be/I2mifghliTM
+💻 **GitHub**: https://github.com/AkashMV333-hub/AI-Interview-Assistant
 
 ## ✨ Features
 
@@ -358,8 +359,9 @@ MIT
 
 Built as part of Swipe Internship Assignment
 
-**GitHub**: [Your GitHub Profile]
-**Email**: [Your Email]
+**Name**: Akash MV
+**GitHub**: https://github.com/AkashMV333-hub
+**Email**: mvakash283@gmail.com
 
 ---
 
