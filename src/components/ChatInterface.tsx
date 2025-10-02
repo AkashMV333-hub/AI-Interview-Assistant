@@ -536,9 +536,10 @@ const ChatInterface = () => {
                       type={isListening ? 'primary' : 'default'}
                       size="large"
                       style={{
-                        height: '100%',
+                        height: '48px',
                         borderRadius: '0',
-                        minWidth: '56px'
+                        minWidth: '48px',
+                        fontSize: '18px'
                       }}
                     />
                   </Tooltip>
@@ -550,10 +551,13 @@ const ChatInterface = () => {
                     disabled={!currentAnswer.trim()}
                     size="large"
                     style={{
-                      height: '100%',
+                      height: '48px',
                       borderRadius: '0',
                       fontWeight: '600',
-                      minWidth: '120px'
+                      minWidth: '140px',
+                      fontSize: '16px',
+                      color: '#ffffff',
+                      padding: '0 28px'
                     }}
                   >
                     Submit Answer
