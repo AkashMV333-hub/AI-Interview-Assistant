@@ -247,7 +247,7 @@ const InterviewerRoomDashboard = () => {
                 </div>
                 <Button
                   type="primary"
-                  onClick={() => navigate('/interviewer')}
+                  onClick={() => navigate(`/interviewer/${room.roomCode}`)}
                   style={{
                     borderRadius: '0',
                     fontWeight: '600',

@@ -1,10 +1,12 @@
-import { useState } from 'react';
-import { Table, Input, Card, Typography, Tag, Space, Button, Modal, List } from 'antd';
+import { useState, useEffect } from 'react';
+import { Table, Input, Card, Typography, Tag, Space, Button, Modal, List, Spin } from 'antd';
 import { SearchOutlined, EyeOutlined, DownloadOutlined, LogoutOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../store/hooks';
 import { logout } from '../store/slices/authSlice';
 import { removeTokenCookie } from '../utils/jwtUtils';
+import { candidatesAPI } from '../services/api';
+import { setCandidate } from '../store/slices/candidatesSlice';
 import type { Candidate, QuestionAnswer } from '../store/slices/candidatesSlice';
 
 const { Title, Text } = Typography;
@@ -12,11 +14,37 @@ const { Title, Text } = Typography;
 const InterviewerTab = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { roomCode } = useParams<{ roomCode: string }>();
   const candidates = useAppSelector((state) => state.candidates.candidates);
   const { userName } = useAppSelector((state) => state.auth);
   const [searchText, setSearchText] = useState('');
   const [selectedCandidate, setSelectedCandidate] = useState<Candidate | null>(null);
   const [detailsVisible, setDetailsVisible] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCandidates = async () => {
+      if (!roomCode) {
+        navigate('/interviewer/rooms');
+        return;
+      }
+
+      try {
+        setLoading(true);
+        const data = await candidatesAPI.getCandidatesByRoom(roomCode);
+        // Update Redux store with candidates
+        data.forEach((candidate: Candidate) => {
+          dispatch(setCandidate(candidate));
+        });
+      } catch (error) {
+        console.error('Error fetching candidates:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCandidates();
+  }, [roomCode, dispatch, navigate]);
 
   const handleLogout = () => {
     removeTokenCookie();
@@ -105,6 +133,14 @@ const InterviewerTab = () => {
       ),
     },
   ];
+
+  if (loading) {
+    return (
+      <div style={{ minHeight: '100vh', background: '#f4f4f4', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Spin size="large" />
+      </div>
+    );
+  }
 
   return (
     <div style={{ minHeight: '100vh', background: '#f0f2f5' }}>

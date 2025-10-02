@@ -73,6 +73,14 @@ function AppContent() {
               }
             />
             <Route
+              path="/interviewer/:roomCode"
+              element={
+                <ProtectedRoute allowedRole="interviewer">
+                  <InterviewerTab />
+                </ProtectedRoute>
+              }
+            />
+            <Route
               path="/interviewer"
               element={
                 <ProtectedRoute allowedRole="interviewer">
