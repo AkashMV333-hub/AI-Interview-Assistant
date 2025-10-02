@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { Upload, Button, Card, Typography, App } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
-import { useAppDispatch } from '../store/hooks';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { addCandidate } from '../store/slices/candidatesSlice';
 import { setStage, setMissingFields, startInterview } from '../store/slices/interviewSlice';
 import { parseResume } from '../utils/resumeParser';
 import { generateProfileDescription } from '../utils/aiService';
+import { candidatesAPI } from '../services/api';
 import type { Candidate } from '../store/slices/candidatesSlice';
 
 const { Dragger } = Upload;
@@ -15,6 +16,7 @@ const ResumeUpload = () => {
   const [uploading, setUploading] = useState(false);
   const dispatch = useAppDispatch();
   const { message } = App.useApp();
+  const currentRoomCode = useAppSelector((state) => state.interview.currentRoomCode);
 
   const handleUpload = async (file: File) => {
     setUploading(true);
@@ -60,7 +62,31 @@ const ResumeUpload = () => {
         updatedAt: Date.now(),
       };
 
+      // Save candidate to Redux (for local state)
       dispatch(addCandidate(newCandidate));
+
+      // Save candidate to backend
+      if (currentRoomCode) {
+        try {
+          await candidatesAPI.createCandidate({
+            id: newCandidate.id,
+            roomCode: currentRoomCode,
+            name: parsedData.name,
+            email: parsedData.email,
+            phone: parsedData.phone,
+            resumeText: parsedData.text,
+            resumeFile: {
+              name: file.name,
+              type: file.type,
+              data: fileData,
+            },
+            profileDescription,
+          });
+        } catch (error) {
+          console.error('Failed to save candidate to backend:', error);
+          message.warning('Resume uploaded but failed to save to server. Please try again.');
+        }
+      }
 
       // Check for missing fields
       const missing: string[] = [];

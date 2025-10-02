@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { Card, Input, Button, Typography, Space, App } from 'antd';
 import { LoginOutlined } from '@ant-design/icons';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useAppSelector } from '../store/hooks';
+import { useAppSelector, useAppDispatch } from '../store/hooks';
+import { setRoomCode as setInterviewRoomCode } from '../store/slices/interviewSlice';
 import { roomsAPI } from '../services/api';
 
 const { Title, Paragraph, Text } = Typography;
@@ -12,6 +13,7 @@ const JoinInterviewRoom = () => {
   const [roomCode, setRoomCode] = useState(urlRoomCode || '');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { message } = App.useApp();
   const { isAuthenticated, role } = useAppSelector((state) => state.auth);
 
@@ -47,7 +49,22 @@ const JoinInterviewRoom = () => {
     try {
       // Join room via backend API
       const response = await roomsAPI.joinRoom(roomCode.toUpperCase());
-      message.success(`Joined "${response.room.title}" successfully!`);
+
+      // Check if candidate already has an interview for this room
+      if (response.existingCandidate) {
+        if (response.existingCandidate.status === 'completed') {
+          message.error('You have already completed this interview. You cannot retake it.');
+          setLoading(false);
+          return;
+        } else if (response.existingCandidate.status === 'in-progress') {
+          message.warning('Resuming your interview...');
+        }
+      } else {
+        message.success(`Joined "${response.room.title}" successfully!`);
+      }
+
+      // Save room code to Redux for later use
+      dispatch(setInterviewRoomCode(response.room.roomCode));
 
       // Navigate to interview
       setTimeout(() => {

@@ -14,6 +14,7 @@ import {
   addQuestionAnswer,
 } from '../store/slices/candidatesSlice';
 import { generateQuestions, evaluateAnswer, generateSummary } from '../utils/aiService';
+import { candidatesAPI } from '../services/api';
 import type { Message, QuestionAnswer } from '../store/slices/candidatesSlice';
 import type { Question } from '../utils/aiService';
 

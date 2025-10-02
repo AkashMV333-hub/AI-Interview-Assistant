@@ -83,14 +83,38 @@ router.post('/:roomCode/join', authMiddleware, async (req, res) => {
       return res.status(404).json({ message: 'Invalid room code' });
     }
 
-    if (!room.candidateIds.includes(req.user.userId)) {
-      room.candidateIds.push(req.user.userId);
+    const Candidate = require('../models/Candidate');
+    const userId = req.user.userId;
+
+    // Check if candidate already has an interview record for this room
+    const existingCandidate = await Candidate.findOne({ userId, roomCode: room.roomCode });
+
+    if (existingCandidate) {
+      // If interview is in-progress or completed, block re-entry
+      if (existingCandidate.status === 'in-progress') {
+        return res.status(403).json({
+          message: 'You have already started this interview. Please complete it without refreshing.',
+          candidate: existingCandidate
+        });
+      }
+      if (existingCandidate.status === 'completed') {
+        return res.status(403).json({
+          message: 'You have already completed this interview. You cannot retake it.',
+          candidate: existingCandidate
+        });
+      }
+    }
+
+    // Add candidate to room if not already there
+    if (!room.candidateIds.includes(userId)) {
+      room.candidateIds.push(userId);
       await room.save();
     }
 
     res.json({
       message: 'Joined room successfully',
       room,
+      existingCandidate: existingCandidate || null,
     });
   } catch (error) {
     console.error('Join room error:', error);

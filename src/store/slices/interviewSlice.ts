@@ -3,6 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 
 interface InterviewState {
   currentCandidateId: string | null;
+  currentRoomCode: string | null;
   currentQuestionIndex: number;
   isInterviewActive: boolean;
   isPaused: boolean;
@@ -14,6 +15,7 @@ interface InterviewState {
 
 const initialState: InterviewState = {
   currentCandidateId: null,
+  currentRoomCode: null,
   currentQuestionIndex: 0,
   isInterviewActive: false,
   isPaused: false,
@@ -27,6 +29,9 @@ const interviewSlice = createSlice({
   name: 'interview',
   initialState,
   reducers: {
+    setRoomCode: (state, action: PayloadAction<string>) => {
+      state.currentRoomCode = action.payload;
+    },
     startInterview: (state, action: PayloadAction<string>) => {
       state.currentCandidateId = action.payload;
       state.isInterviewActive = true;
@@ -66,6 +71,7 @@ const interviewSlice = createSlice({
 });
 
 export const {
+  setRoomCode,
   startInterview,
   setStage,
   setMissingFields,
