@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Card, Input, Button, Typography, Space, App } from 'antd';
-import { LoginOutlined } from '@ant-design/icons';
+import { Card, Input, Button, Typography, Space, App, Modal } from 'antd';
+import { LoginOutlined, CheckCircleOutlined } from '@ant-design/icons';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../store/hooks';
 import { setRoomCode as setInterviewRoomCode } from '../store/slices/interviewSlice';
@@ -12,6 +12,7 @@ const JoinInterviewRoom = () => {
   const { roomCode: urlRoomCode } = useParams();
   const [roomCode, setRoomCode] = useState(urlRoomCode || '');
   const [loading, setLoading] = useState(false);
+  const [showCompletedModal, setShowCompletedModal] = useState(false);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { message } = App.useApp();
@@ -53,15 +54,23 @@ const JoinInterviewRoom = () => {
       // Check if candidate already has an interview for this room
       if (response.existingCandidate) {
         if (response.existingCandidate.status === 'completed') {
-          message.error('You have already completed this interview. You cannot retake it.');
           setLoading(false);
-          return;
+          setShowCompletedModal(true);
+          return; // Don't navigate, block the user
         } else if (response.existingCandidate.status === 'in-progress') {
           message.warning('Resuming your interview...');
+          // Save room code to Redux and navigate
+          dispatch(setInterviewRoomCode(response.room.roomCode));
+          setTimeout(() => {
+            navigate('/interviewee');
+            setLoading(false);
+          }, 500);
+          return;
         }
-      } else {
-        message.success(`Joined "${response.room.title}" successfully!`);
       }
+
+      // New candidate joining
+      message.success(`Joined "${response.room.title}" successfully!`);
 
       // Save room code to Redux for later use
       dispatch(setInterviewRoomCode(response.room.roomCode));
@@ -73,8 +82,14 @@ const JoinInterviewRoom = () => {
       }, 500);
     } catch (error: any) {
       console.error('Error joining room:', error);
-      message.error(error.message || 'Failed to join room. Please check the code and try again.');
       setLoading(false);
+
+      // Check if error is about completed interview
+      if (error.message && error.message.includes('already completed')) {
+        setShowCompletedModal(true);
+      } else {
+        message.error(error.message || 'Failed to join room. Please check the code and try again.');
+      }
     }
   };
 
@@ -166,6 +181,39 @@ const JoinInterviewRoom = () => {
           </div>
         </Space>
       </Card>
+
+      <Modal
+        open={showCompletedModal}
+        onOk={() => setShowCompletedModal(false)}
+        onCancel={() => setShowCompletedModal(false)}
+        footer={[
+          <Button
+            key="ok"
+            type="primary"
+            onClick={() => setShowCompletedModal(false)}
+            style={{
+              borderRadius: '0',
+              height: '40px',
+              fontWeight: '600'
+            }}
+          >
+            OK
+          </Button>
+        ]}
+        centered
+      >
+        <div style={{ textAlign: 'center', padding: '24px 0' }}>
+          <CheckCircleOutlined style={{ fontSize: '64px', color: '#0000cc', marginBottom: '24px' }} />
+          <Title level={3} style={{ color: '#161616', marginBottom: '16px' }}>
+            Interview Already Completed
+          </Title>
+          <Text style={{ color: '#525252', fontSize: '15px' }}>
+            You have already completed this interview. You cannot retake it.
+            <br />
+            Please contact the interviewer for any queries.
+          </Text>
+        </div>
+      </Modal>
     </div>
   );
 };

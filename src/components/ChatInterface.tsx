@@ -276,22 +276,42 @@ const ChatInterface = () => {
       candidate.questionsAnswers.length;
 
     const summary = await generateSummary(candidate.name, candidate.questionsAnswers);
+    const finalScoreValue = Math.round(totalScore * 10) / 10;
 
+    // Update Redux state
     dispatch(
       updateCandidate({
         id: candidate.id,
         updates: {
           status: 'completed',
-          finalScore: Math.round(totalScore * 10) / 10,
+          finalScore: finalScoreValue,
           summary,
         },
       })
     );
 
+    // Save to backend
+    try {
+      await candidatesAPI.updateCandidate(candidate.id, {
+        status: 'completed',
+        finalScore: finalScoreValue,
+        summary,
+        chatHistory: [...candidate.chatHistory, {
+          id: `msg-${Date.now()}`,
+          type: 'system',
+          content: `Interview completed! Final Score: ${finalScoreValue}/10\n\nSummary: ${summary}`,
+          timestamp: Date.now(),
+        }],
+        questionsAnswers: candidate.questionsAnswers,
+      });
+    } catch (error) {
+      console.error('Failed to save completion status to backend:', error);
+    }
+
     const completionMsg: Message = {
       id: `msg-${Date.now()}`,
       type: 'system',
-      content: `Interview completed! Final Score: ${Math.round(totalScore * 10) / 10}/10\n\nSummary: ${summary}`,
+      content: `Interview completed! Final Score: ${finalScoreValue}/10\n\nSummary: ${summary}`,
       timestamp: Date.now(),
     };
     dispatch(addMessageToCandidate({ candidateId: candidate.id, message: completionMsg }));
