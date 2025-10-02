@@ -14,6 +14,7 @@ import IntervieweeTab from './components/IntervieweeTab';
 import InterviewerRoomDashboard from './components/InterviewerRoomDashboard';
 import InterviewerTab from './components/InterviewerTab';
 import WelcomeBackModal from './components/WelcomeBackModal';
+import AuthCheck from './components/AuthCheck';
 import './App.css';
 
 function AppContent() {
@@ -27,6 +28,7 @@ function AppContent() {
     >
       <AntApp>
         <BrowserRouter>
+          <AuthCheck />
           <WelcomeBackModal />
           <Routes>
             <Route path="/" element={<RoleSelection />} />
