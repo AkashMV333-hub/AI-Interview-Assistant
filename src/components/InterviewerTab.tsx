@@ -6,7 +6,7 @@ import { useAppSelector, useAppDispatch } from '../store/hooks';
 import { logout } from '../store/slices/authSlice';
 import { removeTokenCookie } from '../utils/jwtUtils';
 import { candidatesAPI } from '../services/api';
-import { setCandidate } from '../store/slices/candidatesSlice';
+import { addCandidate, updateCandidate } from '../store/slices/candidatesSlice';
 import type { Candidate, QuestionAnswer } from '../store/slices/candidatesSlice';
 
 const { Title, Text } = Typography;
@@ -31,13 +31,21 @@ const InterviewerTab = () => {
 
       try {
         setLoading(true);
+        console.log('Fetching candidates for room:', roomCode);
         const data = await candidatesAPI.getCandidatesByRoom(roomCode);
-        // Update Redux store with candidates
+        console.log('Fetched candidates:', data);
+        // Update Redux store with candidates (check for duplicates)
         data.forEach((candidate: Candidate) => {
-          dispatch(setCandidate(candidate));
+          const exists = candidates.find((c) => c.id === candidate.id);
+          if (!exists) {
+            dispatch(addCandidate(candidate));
+          } else {
+            dispatch(updateCandidate({ id: candidate.id, updates: candidate }));
+          }
         });
-      } catch (error) {
+      } catch (error: any) {
         console.error('Error fetching candidates:', error);
+        console.error('Error details:', error.message, error.response);
       } finally {
         setLoading(false);
       }
